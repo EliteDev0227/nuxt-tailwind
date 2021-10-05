@@ -2,6 +2,16 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '/funny',
+        component: resolve(__dirname, 'pages/fun.vue')
+      })
+    }
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt-tailwind',
@@ -40,7 +50,12 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxt/http'
   ],
+
+  http: {
+
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
