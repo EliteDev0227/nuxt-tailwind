@@ -1,32 +1,29 @@
 <template>
   <div>
-    <h1>This is fun page!</h1>
-    <NuxtLogo />
-    <div @click="onClickHome">Home page</div>
+    <h1>Mountain Page</h1>
+    <p v-if="$fetchState.pending">Fetching mountains...</p>
+    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <div v-else>
+      <h1>Nuxt Mountains</h1>
+      <ul>
+        <li v-for="mountain of mountains">{{ mountain.title }}</li>
+      </ul>
+      <button @click="$fetch">Refresh</button>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  asyncData(context) {
-    console.log('asyncData context', context);
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-      setTimeout(() => this.$nuxt.$loading.finish(), 500)
-    })
-  },
-  async fetch() {
-    const posts = await this.$http.$get('https://api.nuxtjs.dev/posts')
-    console.log('posts', posts);
-  },
-  methods: {
-    onClickHome() {
-      this.$router.push("/");
+<script>
+  export default {
+    data() {
+      return {
+        mountains: []
+      }
+    },
+    async fetch() {
+      this.mountains = await fetch(
+        'https://api.nuxtjs.dev/mountains'
+      ).then(res => res.json())
     }
   }
-})
 </script>

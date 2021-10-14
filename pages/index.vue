@@ -1,5 +1,10 @@
 <template>
-  <h1>Hello!</h1>
+  <div>
+    <h1>Hello!</h1>
+    <NuxtLink to="/fun">
+      NuxtLink to fun page
+    </NuxtLink>
+  </div>
 </template>
 
 <script lang="ts">
